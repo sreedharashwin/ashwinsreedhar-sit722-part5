@@ -6,13 +6,10 @@ on:
       - main
 
 jobs:
-
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      
-      - name: Checkout code
       - uses: actions/checkout@v3
 
       - name: Terraform Init
@@ -23,7 +20,7 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: ./terraform
 
-       - name: Set environment variables from Terraform outputs
+      - name: Set environment variables from Terraform outputs
         id: set_env
         run: |
           echo "REGISTRY_HOSTNAME=$(terraform output -raw registry_hostname)" >> $GITHUB_ENV
@@ -31,7 +28,6 @@ jobs:
           echo "REGISTRY_PW=$(terraform output -raw registry_pw)" >> $GITHUB_ENV
           echo "KUBE_CONFIG=$(terraform output -raw kube_config)" >> $GITHUB_ENV
         working-directory: ./terraform
-
 
       - name: Setting permissions for build script
         run: chmod +x ./scripts/build-image.sh
@@ -45,7 +41,6 @@ jobs:
       - name: Publish
         run: ./scripts/push-image.sh
 
- 
       - uses: tale/kubectl-action@v1
         with:
           base64-kube-config: ${{ secrets.KUBE_CONFIG }}
