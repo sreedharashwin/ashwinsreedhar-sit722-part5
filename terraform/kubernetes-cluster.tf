@@ -26,7 +26,8 @@ resource "azurerm_role_assignment" "role_assignment" {
   skip_service_principal_aad_check = true
 }
 
-output "kube_config" {
-  value = base64encode(azurerm_kubernetes_cluster.sit722k8s.kube_config_raw)
-  sensitive = true
+resource "local_file" "kubeconfig" {
+  depends_on   = [azurerm_kubernetes_cluster.sit722k8s]
+  filename     = ".kubeconfig"
+  content      = azurerm_kubernetes_cluster.sit722k8s.kube_config_raw
 }
