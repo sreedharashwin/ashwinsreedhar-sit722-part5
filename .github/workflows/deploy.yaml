@@ -9,6 +9,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      VERSION: ${{ github.sha }}
+
     steps:
       
     - uses: azure/login@v2
