@@ -32,10 +32,12 @@ jobs:
     - name: Set environment variables from Terraform outputs
       id: set_env
       run: |
-          echo "REGISTRY_HOSTNAME=$(terraform output -raw registry_hostname)" >> $GITHUB_OUTPUT
-          echo "REGISTRY_UN=$(terraform output -raw registry_un)" >> $GITHUB_OUTPUT
-          echo "REGISTRY_PW=$(terraform output -raw registry_pw)" >> $GITHUB_OUTPUT
-          echo "KUBE_CONFIG=$(echo -n $(terraform output -raw kube_config) | base64)" >> $GITHUB_OUTPUT
+          echo "REGISTRY_HOSTNAME=$(terraform output -raw registry_hostname)" >> $GITHUB_ENV
+          echo "REGISTRY_UN=$(terraform output -raw registry_un)" >> $GITHUB_ENV
+          echo "REGISTRY_PW=$(terraform output -raw registry_pw)" >> $GITHUB_ENV
+          echo 'KUBE_CONFIG<<EOF' >> $GITHUB_ENV
+          echo $(echo -n $(terraform output -raw kube_config) | base64) >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
       working-directory: ./terraform
 
     - name: Setting permissions for build script
@@ -52,7 +54,7 @@ jobs:
 
     - uses: tale/kubectl-action@v1
       with:
-        base64-kube-config: ${{steps.set_env.outputs.KUBE_CONFIG }}
+        base64-kube-config: $KUBE_CONFIG
         kubectl-version: v1.24.2
 
     - name: Setting permissions for deploy script
