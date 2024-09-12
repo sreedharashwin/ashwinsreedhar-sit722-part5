@@ -14,6 +14,10 @@ jobs:
     - uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+    - uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_wrapper: false
           
     - uses: actions/checkout@v3
 
@@ -28,10 +32,10 @@ jobs:
     - name: Set environment variables from Terraform outputs
       id: set_env
       run: |
-          echo "REGISTRY_HOSTNAME=$(terraform output -raw registry_hostname)" >> $GITHUB_ENV
-          echo "REGISTRY_UN=$(terraform output -raw registry_un)" >> $GITHUB_ENV
-          echo "REGISTRY_PW=$(terraform output -raw registry_pw)" >> $GITHUB_ENV
-          echo "KUBE_CONFIG=$(terraform output -raw kube_config)" >> $GITHUB_ENV
+          echo "REGISTRY_HOSTNAME=$(terraform output -raw registry_hostname)" >> $GITHUB_OUTPUT
+          echo "REGISTRY_UN=$(terraform output -raw registry_un)" >> $GITHUB_OUTPUT
+          echo "REGISTRY_PW=$(terraform output -raw registry_pw)" >> $GITHUB_OUTPUT
+          echo "KUBE_CONFIG=$(echo -n $(terraform output -raw kube_config) | base64)" >> $GITHUB_OUTPUT
       working-directory: ./terraform
 
     - name: Setting permissions for build script
@@ -48,7 +52,7 @@ jobs:
 
     - uses: tale/kubectl-action@v1
       with:
-        config: ${{env.KUBE_CONFIG }}
+        base64-kube-config: ${{steps.set_env.outputs.KUBE_CONFIG }}
         kubectl-version: v1.24.2
 
     - name: Setting permissions for deploy script
