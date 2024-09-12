@@ -1,7 +1,6 @@
-# Your Solution
 services:
   book_catalog:
-    image: book_catalog
+    image: "${REGISTRY_HOSTNAME}/book_catalog:${VERSION}"
     build:
       context: ./book_catalog
       dockerfile: Dockerfile
@@ -10,7 +9,7 @@ services:
       - "8000:8000" 
 
   inventory_management:
-    image: inventory
+    image: "${REGISTRY_HOSTNAME}/inventory:${VERSION}"
     build:
       context: ./inventory_management
       dockerfile: Dockerfile
