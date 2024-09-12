@@ -27,6 +27,6 @@ resource "azurerm_role_assignment" "role_assignment" {
 }
 
 output "kube_config" {
-  value = azurerm_kubernetes_cluster.sit722k8s.kube_config_raw
+  value = base64encode(azurerm_kubernetes_cluster.sit722k8s.kube_config_raw)
   sensitive = true
 }
