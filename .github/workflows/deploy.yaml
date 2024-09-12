@@ -39,7 +39,7 @@ jobs:
           echo "REGISTRY_UN=$(terraform output -raw registry_un)" >> $GITHUB_ENV
           echo "REGISTRY_PW=$(terraform output -raw registry_pw)" >> $GITHUB_ENV
           echo 'KUBE_CONFIG<<EOF' >> $GITHUB_ENV
-          echo $(echo -n $(terraform output -raw kube_config) | base64) >> $GITHUB_ENV
+          echo "$(terraform output -raw kube_config | base64)" >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       working-directory: ./terraform
 

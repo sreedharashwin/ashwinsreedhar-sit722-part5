@@ -10,17 +10,20 @@ jobs:
     
     env:
       VERSION: ${{ github.sha }}
-      CONTAINER_REGISTRY: ${{ env.REGISTRY_HOSTNAME }}
-      REGISTRY_UN: ${{ env.REGISTRY_UN }}
-      REGISTRY_PW: ${{ env.REGISTRY_PW  }}
+      CONTAINER_REGISTRY: $REGISTRY_HOSTNAME
+      REGISTRY_UN: $REGISTRY_UN
+      REGISTRY_PW: $REGISTRY_PW
 
     steps:
       - uses: tale/kubectl-action@v1
         with:
-          base64-kube-config: ${{ env.KUBE_CONFIG }}
+          base64-kube-config: $KUBE_CONFIG
           kubectl-version: v1.24.2
       
       - uses: actions/checkout@v3
+
+      - name: Setting permissions for delete script
+        run: chmod +x ./scripts/delete.sh
 
       - name: Delete
         run: ./scripts/delete.sh
