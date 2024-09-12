@@ -1,11 +1,11 @@
 set -u # or set -o nounset
-: "$CONTAINER_REGISTRY"
+: "$REGISTRY_HOSTNAME"
 : "$VERSION"
 : "$REGISTRY_UN"
 : "$REGISTRY_PW"
 
-echo $REGISTRY_PW | docker login $CONTAINER_REGISTRY --username $REGISTRY_UN --password-stdin
+echo $REGISTRY_PW | docker login $REGISTRY_HOSTNAME --username $REGISTRY_UN --password-stdin
 
-docker push $CONTAINER_REGISTRY/catalog:$VERSION
+docker push $REGISTRY_HOSTNAME/catalog:$VERSION
 
-docker push $CONTAINER_REGISTRY/inventory:$VERSION
+docker push $REGISTRY_HOSTNAME/inventory:$VERSION

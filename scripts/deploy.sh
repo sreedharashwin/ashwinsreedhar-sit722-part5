@@ -1,5 +1,5 @@
 set -u # or set -o nounset
-: "$CONTAINER_REGISTRY"
+: "$REGISTRY_HOSTNAME"
 : "$VERSION"
 
 envsubst < ./scripts/kubernetes/deployment.yaml | kubectl apply -f -

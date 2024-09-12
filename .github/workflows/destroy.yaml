@@ -10,14 +10,14 @@ jobs:
     
     env:
       VERSION: ${{ github.sha }}
-      CONTAINER_REGISTRY: ${{ secrets.CONTAINER_REGISTRY }}
-      REGISTRY_UN: ${{ secrets.REGISTRY_UN }}
-      REGISTRY_PW: ${{ secrets.REGISTRY_PW  }}
+      CONTAINER_REGISTRY: ${{ env.REGISTRY_HOSTNAME }}
+      REGISTRY_UN: ${{ env.REGISTRY_UN }}
+      REGISTRY_PW: ${{ env.REGISTRY_PW  }}
 
     steps:
       - uses: tale/kubectl-action@v1
         with:
-          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+          base64-kube-config: ${{ env.KUBE_CONFIG }}
           kubectl-version: v1.24.2
       
       - uses: actions/checkout@v3

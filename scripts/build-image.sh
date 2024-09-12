@@ -1,11 +1,11 @@
 set -u # or set -o nounset
-: "$CONTAINER_REGISTRY"
+: "$REGISTRY_HOSTNAME"
 : "$VERSION"
 
 cd ./book_catalog
 
-docker build --no-cache -t $CONTAINER_REGISTRY/catalog:$VERSION .
+docker build --no-cache -t $REGISTRY_HOSTNAME/catalog:$VERSION .
 
 cd ./inventory_management
 
-docker build --no-cache -t $CONTAINER_REGISTRY/inventory:$VERSION .
+docker build --no-cache -t $REGISTRY_HOSTNAME/inventory:$VERSION .
