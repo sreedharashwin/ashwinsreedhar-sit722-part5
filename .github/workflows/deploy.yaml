@@ -53,9 +53,7 @@ jobs:
       run: ./scripts/push-image.sh
 
     - name: Set up kubectl
-      uses: azure/setup-kubectl@v1
-      with:
-        version: '1.23.0'
+      uses: azure/setup-kubectl@v4
 
     - name: Setting permissions for deploy script
       run: chmod +x ./scripts/deploy.sh
