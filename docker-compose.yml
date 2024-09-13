@@ -7,6 +7,8 @@ services:
     container_name: catalog
     ports:
       - "8000:8000" 
+    environment:
+      - DATABASE_URL=postgresql://library_5aya_user:95juShCQRCnURO4ICnHNixBa5hTEZjeC@dpg-crh8jm08fa8c738tn0bg-a.oregon-postgres.render.com/library_5aya
 
   inventory_management:
     image: "${REGISTRY_HOSTNAME}/inventory:${VERSION}"
@@ -16,3 +18,5 @@ services:
     container_name: inventory
     ports:
       - "8001:8001"
+    environment:
+      - DATABASE_URL=postgresql://library_5aya_user:95juShCQRCnURO4ICnHNixBa5hTEZjeC@dpg-crh8jm08fa8c738tn0bg-a.oregon-postgres.render.com/library_5aya
