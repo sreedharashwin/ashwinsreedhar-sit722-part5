@@ -3,4 +3,4 @@ set -u # or set -o nounset
 : "$VERSION"
 
 cd .
-docker-compose up -d --build
+docker compose up -d --build
