@@ -1,6 +1,6 @@
 services:
   book_catalog:
-    image: "${REGISTRY_HOSTNAME}/book_catalog:${VERSION}"
+    image: "book_catalog:1"
     build:
       context: ./book_catalog
       dockerfile: Dockerfile
@@ -8,10 +8,10 @@ services:
     ports:
       - "8000:8000" 
     environment:
-      - DATABASE_URL=${POSTGRES_URL}
+      - DATABASE_URL=postgresql://library_5aya_user:95juShCQRCnURO4ICnHNixBa5hTEZjeC@dpg-crh8jm08fa8c738tn0bg-a.oregon-postgres.render.com/library_5aya
 
   inventory_management:
-    image: "${REGISTRY_HOSTNAME}/inventory:${VERSION}"
+    image: "inventory:1"
     build:
       context: ./inventory_management
       dockerfile: Dockerfile
@@ -19,4 +19,4 @@ services:
     ports:
       - "8001:8001"
     environment:
-      - DATABASE_URL=${POSTGRES_URL}
+      - DATABASE_URL=postgresql://library_5aya_user:95juShCQRCnURO4ICnHNixBa5hTEZjeC@dpg-crh8jm08fa8c738tn0bg-a.oregon-postgres.render.com/library_5aya
