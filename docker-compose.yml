@@ -1,6 +1,6 @@
 services:
   book_catalog:
-    image: "book_catalog:1"
+    image: "${REGISTRY_HOSTNAME}/book_catalog:${VERSION}"
     build:
       context: ./book_catalog
       dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
       - DATABASE_URL=postgresql://library_5aya_user:95juShCQRCnURO4ICnHNixBa5hTEZjeC@dpg-crh8jm08fa8c738tn0bg-a.oregon-postgres.render.com/library_5aya
 
   inventory_management:
-    image: "inventory:1"
+    image: "${REGISTRY_HOSTNAME}/inventory:${VERSION}"
     build:
       context: ./inventory_management
       dockerfile: Dockerfile
